@@ -14,6 +14,8 @@ const PORT = process.env.PORT;
 const app = express();
 app.use(express.json());
 app.use("/api/auth/", require("./routes/auth"));
+app.use("/api/administrator", require("./routes/AdministratorUser"));
+
 
 // error handler should be last middleware
 app.use(errorHandler)

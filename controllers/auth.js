@@ -12,10 +12,7 @@ exports.register = async (req, res, next) => {
       organizationName,
     });
 
-    res.status(201).json({
-      sucess: true,
-      administrator,
-    });
+    sendToken(administrator,201,res)
   } catch (error) {
     next(error)
   }
@@ -37,8 +34,14 @@ exports.login = async (req, res, next) => {
     if (!isMatch) {
       return next(new ErrorResponce("Invalid email and password",401))
     }
-    res.status(201).json({ sucess: true, token: "123456" });
+    sendToken(administrator,200,res)
   } catch (error) { res
     .status(500)
     .json({ sucess: false, error:error.message });}
 };
+
+
+const sendToken=(administrator,statusCode,res)=>{
+  const token=administrator.getSignedToken()
+  res.status(statusCode).json({sucess:true,token})
+}
