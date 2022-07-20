@@ -3,7 +3,7 @@ import React from 'react'
 import LoginIcon from '@mui/icons-material/Login';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import BlankHeader from '../Blanks/BlankHeader';
 import axios from "axios"
 const PaperStyle={
@@ -25,6 +25,9 @@ fontFamily:"Inter",
 
 function Login() {
     const [matched,setmatch]=useState("")
+    const navigate=useNavigate()
+    const [error,setError]=useState("")
+    const [ismatched,setIsMached]=useState(true)
     const [user,setUser]=useState({
         email:"",
         password:"",
@@ -42,8 +45,11 @@ function Login() {
         const confirm=event.target.value
         if(confirm===user.password){
             setmatch("")
+           setIsMached(true)
         }else {
             setmatch("password not matched")
+            setIsMached(false)
+            
         }
 
 
@@ -51,7 +57,23 @@ function Login() {
       const handleSubmit= async(e)=>{
         e.preventDefault();
         
-        
+        const config={
+          header:{
+              "content-Type":"application/json"
+          }
+          
+        }
+        try {
+          const {data}=await axios.post("http://localhost:5000/api/auth/login",user,config)
+          localStorage.setItem("authToken",data.token)
+          if(data.sucess===true){
+              navigate("/dashboard ")
+          }
+          
+        } catch (error) {
+          setError(error.response.data.error)
+          setTimeout(()=>{setError("")},5000)
+        }
       }
       
   return (<>
@@ -78,7 +100,8 @@ function Login() {
                 <TextField name="password"onChange={handleChange} color='primary' style={textfieldStyle} fullWidth label="Password" variant="standard" placeholder='Enter password' type="password"value={user.password} />
                 <TextField onChange={confirmPassword} helperText={matched} color='primary' style={textfieldStyle} fullWidth label="Confirm Password" variant="standard" placeholder='Confirm your Password'type="password" />
                 <Grid  align="center" margin={4}>
-                <Button  variant="contained" color='primary' type="submit" style={{color:"white" ,width:"50%"}} >Log In</Button>
+                {error&&<span>{error}</span>}
+                <Button  variant="contained" color='primary' type="submit" style={{color:"white" ,width:"50%"}} disabled={!ismatched} >Log In</Button>
                 </Grid>
                 <Grid align="center" margin={0}>
                 <Typography variant="h6">OR</Typography>

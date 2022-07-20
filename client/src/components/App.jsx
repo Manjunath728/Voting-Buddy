@@ -42,13 +42,12 @@ function App() {
         <Route path="/voter" element={<Voter/>}/>
         <Route path="vote" element={<Vote/>}/>
       </Route>
-      <Route path="/" element={<AdminstratorStartPage/>}>
+      <Route path="" element={<AdminstratorStartPage/>}>
       <Route path="/dashboard" element={<AdminstratorDashboard/>}/>
       <Route path="/profile" element={<Myprofile/>}/>
       <Route path="/organization" element={<Organization/>}/>
       <Route path="/billing" element={<Billing/>}/>
-      <Route path="/logout" element={<Logout/>} />  
-      <Route path="/logout/confirm" element={<Navigate to="/" replace={true} />} /> 
+      <Route path="/logout" element={<Logout/>} />   
       </Route>
       </Routes>
       

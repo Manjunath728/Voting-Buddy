@@ -3,7 +3,7 @@ import React from 'react'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import {ToastContainer,toast } from "react-toastify"
 import axios from "axios"
 const PaperStyle={
@@ -23,14 +23,18 @@ fontFamily:"Inter",
 
 }
 
-function SignUp() {
+function SignUp({history}) {
+  const navigate=useNavigate()
     const [matched,setmatch]=useState("")
+    const [ismatched,setIsMached]=useState(true)
+    const [redirect,setRedirect]=useState(<></>)
     const [user,setUser]=useState({
         name:"",
         email:"",
         password:"",
-        organisationName:""
+        organizationName:""
     })
+    const [error,setError]=useState("")
     function handleChange(event) {
         const { name, value } = event.target;
     
@@ -44,13 +48,35 @@ function SignUp() {
         const confirm=event.target.value
         if(confirm===user.password){
             setmatch("")
+           setIsMached(true)
         }else {
             setmatch("password not matched")
+            setIsMached(false)
+            
         }
+
 
       }
       const handleSubmit= async(e)=>{
         e.preventDefault();
+      const config={
+        header:{
+            "content-Type":"application/json"
+        }
+        
+      }
+      try {
+        const {data}=await axios.post("http://localhost:5000/api/auth/register",user,config)
+        localStorage.setItem("authToken",data.token)
+        if(data.sucess===true){
+            navigate("/dashboard ")
+        }
+        
+      } catch (error) {
+        setError(error.response.data.error)
+        setTimeout(()=>{setError("")},5000)
+      }
+      
       }
 
       
@@ -61,7 +87,7 @@ function SignUp() {
   
   minHeight="100vh"
 >
-<Grid >
+<Grid >{redirect}
         <Paper elevation={20} style={PaperStyle}>
             <Grid align="center" margin={3}>
                 <Avatar style={avatarStyle}>
@@ -77,9 +103,10 @@ function SignUp() {
                 <TextField name="email"onChange={handleChange} color='primary' style={textfieldStyle} fullWidth label="Email" variant="standard" placeholder='Enter your Email'type="email"value={user.email}  />
                 <TextField name="password"onChange={handleChange} color='primary' style={textfieldStyle} fullWidth label="Password" variant="standard" placeholder='Enter password' type="password"value={user.password} />
                 <TextField onChange={confirmPassword} helperText={matched} color='primary' style={textfieldStyle} fullWidth label="Confirm Password" variant="standard" placeholder='Confirm your Password'type="password" />
-                <TextField name="organisationName"onChange={handleChange} color='primary' style={textfieldStyle} fullWidth label="Organization Name" variant="standard" placeholder='Enter your Organization Name'value={user.organisationName}  />
+                <TextField name="organizationName"onChange={handleChange} color='primary' style={textfieldStyle} fullWidth label="Organization Name" variant="standard" placeholder='Enter your Organization Name'value={user.organizationName}  />
                 <Grid  align="center" margin={4}>
-               <Button  variant="contained" color='primary' type="submit" style={{color:"white" ,width:"50%"}} >Create  account</Button>
+                    {error&&<span>{error}</span>}
+               <Button onClick={()=>console.log("amclicked")} variant="contained" color='primary' type="submit" style={{color:"white" ,width:"50%"}} disabled={!ismatched} >Create  account</Button>
                 </Grid>
                 <Grid align="center" margin={0}>
                 <Typography variant="h6">OR</Typography>

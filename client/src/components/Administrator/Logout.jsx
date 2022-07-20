@@ -1,14 +1,23 @@
 import { Button, Grid } from '@mui/material'
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Box } from '@mui/system';
 function Logout() {
+  const navigate=useNavigate()
+  function handleClick(){
+    localStorage.setItem("authToken","")
+    navigate("/")
+  }
   return (<>
 <ThemeProvider theme={createTheme({palette: { primary: {main:"#EC7700"}}})}>
-   <Box > <h1>Confirm logout</h1>
+   <Box   display="flex"
+  justifyContent="center"
+  alignItems="center"
+ 
+  minHeight="100vh" > <Grid textAlign={"center"}><h1>Confirm logout</h1>
 
-    <Link to="/logout/confirm"> <Button variant="contained" color='primary' style={{color:"white" }}>Logout</Button></Link></Box></ThemeProvider></>
+   <Button variant="contained"  onClick={handleClick} color='primary' style={{color:"white" }}>Logout</Button></Grid></Box></ThemeProvider></>
   )
 }
 
