@@ -1,0 +1,42 @@
+{
+    details: {
+      electionTitle: "Svs Election",
+      electionStartAt: new Date(),
+      electionEndAt: new Date(),
+      securityType: "private",
+      adminAcessType: true,
+      voterAcessType: true,
+    },
+    ballots: {
+      
+      postionName: "class leader",
+      votePerVoter: 1,
+      electionInstruction: "world",
+      nota: true,
+    },
+    candidates: [
+      {
+        candidateName: "manjunath",
+        candidateManifesto: "free beer",
+      },
+      {
+        candidateName: "ullas",
+        candidateManifesto: "free rasna",
+      },
+    ],
+    voter: [
+      {
+        voterName: "manju",
+        acessKey: "abc",
+        passKey: "abc",
+        email: "bmanjhnu@gmail.com",
+      },
+      {
+        voterName: "ullas",
+        acessKey: "abcd",
+        passKey: "abcd",
+        email: "ullashs@gmail.com",
+      },
+    ],
+    payment:"type1"
+  }

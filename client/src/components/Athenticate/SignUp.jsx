@@ -5,6 +5,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import {ToastContainer,toast } from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios"
 const PaperStyle={
     padding:"30px 20px",width:500,margin:"20px auto"
@@ -34,7 +35,7 @@ function SignUp({history}) {
         password:"",
         organizationName:""
     })
-    const [error,setError]=useState("")
+    const [CoustomError,setError]=useState("")
     function handleChange(event) {
         const { name, value } = event.target;
     
@@ -69,12 +70,33 @@ function SignUp({history}) {
         const {data}=await axios.post("http://localhost:5000/api/auth/register",user,config)
         localStorage.setItem("authToken",data.token)
         if(data.sucess===true){
+          toast.success("Sucessfully Created Account and Logged  In", {
+            position: "bottom-left",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            });
             navigate("/dashboard ")
         }
         
       } catch (error) {
         setError(error.response.data.error)
-        setTimeout(()=>{setError("")},5000)
+        if(CoustomError==="duplicate Filed value enter"){
+          setError("Entered email id already registerd try to login ")
+        }else{
+        toast.error(CoustomError, {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });}
+        
       }
       
       }
@@ -87,7 +109,7 @@ function SignUp({history}) {
   
   minHeight="100vh"
 >
-<Grid >{redirect}
+<Grid >
         <Paper elevation={20} style={PaperStyle}>
             <Grid align="center" margin={3}>
                 <Avatar style={avatarStyle}>
@@ -105,7 +127,7 @@ function SignUp({history}) {
                 <TextField onChange={confirmPassword} helperText={matched} color='primary' style={textfieldStyle} fullWidth label="Confirm Password" variant="standard" placeholder='Confirm your Password'type="password" />
                 <TextField name="organizationName"onChange={handleChange} color='primary' style={textfieldStyle} fullWidth label="Organization Name" variant="standard" placeholder='Enter your Organization Name'value={user.organizationName}  />
                 <Grid  align="center" margin={4}>
-                    {error&&<span>{error}</span>}
+                    
                <Button onClick={()=>console.log("amclicked")} variant="contained" color='primary' type="submit" style={{color:"white" ,width:"50%"}} disabled={!ismatched} >Create  account</Button>
                 </Grid>
                 <Grid align="center" margin={0}>

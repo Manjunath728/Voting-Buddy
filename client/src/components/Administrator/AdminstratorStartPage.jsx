@@ -6,6 +6,7 @@ import axios from 'axios'
 function AdminstratorStartPage() {
   const navigate=useNavigate()
   const [isValid, setIsValid] = useState(false)
+  const [user, setUser] = useState("")
   const [isLoading, setIsLoading] = useState(true)
   const config = {
     headers: {
@@ -18,8 +19,10 @@ useEffect(()=>{
  if(localStorage.authToken){
     axios.get("http://localhost:5000/api/administrator",config).then((isvalid)=>{
       setIsValid(isvalid.data.sucess)
-      setIsLoading(!isvalid.data.sucess)
-    })
+      const {name}=isvalid.data.admin
+      setUser(name)
+      setIsLoading(false)
+    }).catch((error)=>{navigate("/login")})
   }else{
     navigate("/login")
   } 
@@ -28,7 +31,7 @@ useEffect(()=>{
   
 
   function Page() {
-    return <><AdministratorHeader /><Outlet /></>
+    return <><AdministratorHeader username={user} /><Outlet /></>
   }
 
   return (

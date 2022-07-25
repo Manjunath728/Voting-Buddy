@@ -24,7 +24,7 @@ const theme = createTheme({
 });
 
 
-function AdministratorHeader() {
+function AdministratorHeader(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -56,7 +56,7 @@ function AdministratorHeader() {
         color="primary"
        
       >
-        Hi User1 <ArrowDropDownIcon/>
+        Hi {props.username} <ArrowDropDownIcon/>
       </Button></ThemeProvider>
       <Menu
         id="basic-menu"
@@ -76,6 +76,7 @@ function AdministratorHeader() {
 
       <ThemeProvider theme={theme}>
         <Box>
+          <Link to="/electioncreate">
   <Button
         color="secondary"
         variant='contained'
@@ -85,7 +86,7 @@ function AdministratorHeader() {
        
       >
         Create Election
-      </Button></Box></ThemeProvider>
+      </Button></Link></Box></ThemeProvider>
 
 
   

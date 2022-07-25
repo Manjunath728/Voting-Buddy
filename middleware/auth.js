@@ -15,7 +15,7 @@ exports.protect=async(req,res ,next)=>{
     }
     try {
         const decoded=jwt.verify(token,process.env.JWT_SECRET)
-        const administrator=await Administrator.findById(decoded.id);
+        const administrator=await Administrator.findById(decoded.id).populate("election");
         if(!administrator){
             return next(new ErrorResponce("no user found with this id",404))
         }

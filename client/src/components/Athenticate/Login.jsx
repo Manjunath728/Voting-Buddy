@@ -3,9 +3,10 @@ import React from 'react'
 import LoginIcon from '@mui/icons-material/Login';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
-import BlankHeader from '../Blanks/BlankHeader';
+import { Link,  useNavigate } from 'react-router-dom';
 import axios from "axios"
+import {toast } from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css';
 const PaperStyle={
     padding:"30px 20px",width:500,margin:"20px auto"
 }
@@ -26,7 +27,7 @@ fontFamily:"Inter",
 function Login() {
     const [matched,setmatch]=useState("")
     const navigate=useNavigate()
-    const [error,setError]=useState("")
+    
     const [ismatched,setIsMached]=useState(true)
     const [user,setUser]=useState({
         email:"",
@@ -67,12 +68,34 @@ function Login() {
           const {data}=await axios.post("http://localhost:5000/api/auth/login",user,config)
           localStorage.setItem("authToken",data.token)
           if(data.sucess===true){
+            toast.success("Sucessfully Logged In", {
+              position: "bottom-left",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              });
               navigate("/dashboard ")
           }
           
         } catch (error) {
-          setError(error.response.data.error)
-          setTimeout(()=>{setError("")},5000)
+          
+          toast.error(error.response.data.error, {
+            position: "bottom-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            });
+            setUser((prevValue) => ({
+              ...prevValue,
+              "password": ""
+            }));
+          
         }
       }
       
@@ -100,9 +123,9 @@ function Login() {
                 <TextField name="password"onChange={handleChange} color='primary' style={textfieldStyle} fullWidth label="Password" variant="standard" placeholder='Enter password' type="password"value={user.password} />
                 <TextField onChange={confirmPassword} helperText={matched} color='primary' style={textfieldStyle} fullWidth label="Confirm Password" variant="standard" placeholder='Confirm your Password'type="password" />
                 <Grid  align="center" margin={4}>
-                {error&&<span>{error}</span>}
                 <Button  variant="contained" color='primary' type="submit" style={{color:"white" ,width:"50%"}} disabled={!ismatched} >Log In</Button>
                 </Grid>
+                
                 <Grid align="center" margin={0}>
                 <Typography variant="h6">OR</Typography>
                 </Grid>
@@ -115,6 +138,7 @@ function Login() {
         </Paper>
     </Grid>
 </Box>
+
 </>  
   )
 }

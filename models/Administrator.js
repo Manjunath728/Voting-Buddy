@@ -26,7 +26,8 @@ const AdministratorSchema=new mongoose.Schema({
         type:String,
         required:[true,"please provide organization name"]
 
-    }
+    },
+    election:[{type:mongoose.Schema.Types.ObjectId,ref:"Election"}]
 })
 
 AdministratorSchema.pre("save",async function(next){
@@ -35,7 +36,7 @@ AdministratorSchema.pre("save",async function(next){
     }
     const salt=await bcrypt.genSalt(10)
     this.password=await bcrypt.hash(this.password,salt)
-    next()
+    next()̥
 })
 AdministratorSchema.methods.matchPasswords=async function(password){
     return await bcrypt.compare(password,this.password)

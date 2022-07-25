@@ -1,10 +1,8 @@
 import Home from "./Start/Home";
 import About from "./Start/About"
 import Contact from "./Start/Contact"
-import { useState } from "react";
 import Guide from "./Start/Guide";
-
-import {BrowserRouter as Router,Routes,Route, Link, Navigate} from "react-router-dom"
+import {BrowserRouter as Router,Routes,Route} from "react-router-dom"
 import SignUp from "./Athenticate/SignUp";
 import Login from "./Athenticate/Login";
 import Cards from "./Start/Cards";
@@ -19,13 +17,11 @@ import Myprofile from "./Administrator/Myprofile";
 import Organization from "./Administrator/Organization";
 import Billing from "./Administrator/Billing";
 import Logout from "./Administrator/Logout";
-
-
-
+import { ToastContainer } from "react-toastify";
+import ElectionCreate from "./Administrator/CreateElectionForm/ElectionCreate";
 function App() {
   return (
    <>
-   
     <Router>
       <Routes>
       <Route path="/" element={<LandingPage/>}>
@@ -48,19 +44,12 @@ function App() {
       <Route path="/organization" element={<Organization/>}/>
       <Route path="/billing" element={<Billing/>}/>
       <Route path="/logout" element={<Logout/>} />   
+      <Route path="/electioncreate" element={<ElectionCreate/>} />   
       </Route>
       </Routes>
-      
-      
-        
-      
-      
-      
+      <ToastContainer/>   
     </Router>
-
-    
-    
-   </>
+ </>
   );
 }
 
