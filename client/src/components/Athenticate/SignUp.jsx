@@ -3,7 +3,7 @@ import React from 'react'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {ToastContainer,toast } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios"
@@ -28,7 +28,6 @@ function SignUp({history}) {
   const navigate=useNavigate()
     const [matched,setmatch]=useState("")
     const [ismatched,setIsMached]=useState(true)
-    const [redirect,setRedirect]=useState(<></>)
     const [user,setUser]=useState({
         name:"",
         email:"",
@@ -83,7 +82,7 @@ function SignUp({history}) {
         }
         
       } catch (error) {
-        setError(error.response.data.error)
+         setError(error.response.data.error)
         if(CoustomError==="duplicate Filed value enter"){
           setError("Entered email id already registerd try to login ")
         }else{

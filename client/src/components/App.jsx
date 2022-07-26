@@ -19,6 +19,7 @@ import Billing from "./Administrator/Billing";
 import Logout from "./Administrator/Logout";
 import { ToastContainer } from "react-toastify";
 import ElectionCreate from "./Administrator/CreateElectionForm/ElectionCreate";
+import Election from "./Administrator/Election";
 function App() {
   return (
    <>
@@ -45,6 +46,7 @@ function App() {
       <Route path="/billing" element={<Billing/>}/>
       <Route path="/logout" element={<Logout/>} />   
       <Route path="/electioncreate" element={<ElectionCreate/>} />   
+      <Route path="/election/:electionid" element={<Election/>} />   
       </Route>
       </Routes>
       <ToastContainer/>   
