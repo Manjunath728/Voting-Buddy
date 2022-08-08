@@ -2,12 +2,10 @@ import Home from "./Start/Home";
 import About from "./Start/About"
 import Contact from "./Start/Contact"
 import Guide from "./Start/Guide";
-import {BrowserRouter as Router,Routes,Route} from "react-router-dom"
+import {BrowserRouter as Router,Routes,Route, Link} from "react-router-dom"
 import SignUp from "./Athenticate/SignUp";
 import Login from "./Athenticate/Login";
 import Cards from "./Start/Cards";
-import Voter from "./voter/Voter";
-import Vote from "./voter/Vote";
 import LandingPage from "./Start/LandingPage";
 import BlankPage from "./Blanks/BlankPage";
 import Pricing from "./Start/Pricing";
@@ -20,6 +18,12 @@ import Logout from "./Administrator/Logout";
 import { ToastContainer } from "react-toastify";
 import ElectionCreate from "./Administrator/CreateElectionForm/ElectionCreate";
 import Election from "./Administrator/Election";
+import VoterSignUp from "./Athenticate/voterSignUp";
+import VoterStartingPage from "./Voters/VoterStartingPage";
+import VoterDashboard from "./Voters/VoterDashboard";
+import VoterLogin from "./Athenticate/voterLogin";
+import VoteElectionPage from "./Voters/VoteElectionPage";
+import { Button } from "@mui/material";
 function App() {
   return (
    <>
@@ -36,9 +40,18 @@ function App() {
         <Route path="/card" element={<Cards/>}/>
         <Route path="/signup" element={<SignUp/>}/>
         <Route path="/login" element={<Login/>}/>
-        <Route path="/voter" element={<Voter/>}/>
-        <Route path="vote" element={<Vote/>}/>
+        
       </Route>
+      <Route path="/" element={<BlankPage/>}>
+        <Route path="/voter/signup" element={<VoterSignUp/>}/>
+        <Route path="/voter/login" element={<VoterLogin/>}/>
+      </Route> 
+      <Route path="" element={<VoterStartingPage/>}>
+        <Route path="/voter/dashboard" element={<VoterDashboard/>}/>
+        <Route path="/voter/vote/election/:electionid" element={<VoteElectionPage/>}/>
+  
+      </Route>
+
       <Route path="" element={<AdminstratorStartPage/>}>
       <Route path="/dashboard" element={<AdminstratorDashboard/>}/>
       <Route path="/profile" element={<Myprofile/>}/>
@@ -48,6 +61,7 @@ function App() {
       <Route path="/electioncreate" element={<ElectionCreate/>} />   
       <Route path="/election/:electionid" element={<Election/>} />   
       </Route>
+      <Route path="*" element={<>page not found <Link to=""><Button variant={"contained"}>Click here to goto Home page</Button></Link></>}/>
       </Routes>
       <ToastContainer/>   
     </Router>

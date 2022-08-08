@@ -23,7 +23,7 @@ function Cards() {
     justifyContent="center"
     alignItems="center" >
         <Grid   item align="center" xs={12} md={4}>
-          <Link to="/voter"><Paper  style={PaperStyle} elevation={20}>
+          <Link to="/voter/signup"><Paper  style={PaperStyle} elevation={20}>
             <img style={{width:"100px"}} src={Voter} />
           <h1 style={headerStyle} > I'm a Voter</h1>
           <Typography >cast my vote now</Typography>

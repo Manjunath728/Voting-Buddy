@@ -1,4 +1,4 @@
-import useFetch from '../Athenticate/usefectch'
+import useFetch from '../hooks/useFetchAdmin'
 
 function Organization() {
   const url="http://localhost:5000/api/administrator"

@@ -64,24 +64,22 @@ const candiateSchema = new mongoose.Schema({
     type: String,
     required: [true, "enter candidate manifesto"],
   },
+  votes:{
+    type:Number,
+    default:0
+  }
 });
 const voterSchema = new mongoose.Schema({
-  voterName: {
+  
+  uniqueKey: {
     type: String,
-    required: [true, "enter candidate name"],
-  },
-  acessKey: {
-    type: String,
-    required: true,
-  },
-  passKey: {
-    type: String,
-    required: true,
+    
   },
   email: {
     type: String,
-    required: [true, "please provide email"],
+    
   },
+  isVoted:{type:Boolean,default:false}
 });
 
 const ElectionSchema = new mongoose.Schema({
@@ -90,9 +88,9 @@ const ElectionSchema = new mongoose.Schema({
   candidates: [{type:candiateSchema,required:[true,"enter candidate details corectly"]}],
   voter: [{type:voterSchema,required:[true,"enter voter details corectly"]}],
   payment: {
-    type: String,
-    required: [true, "enter payment mode"],
-  },
+    maxVoter:Number,
+    price:Number
+  }
 });
 
 const Election = mongoose.model("Election", ElectionSchema);

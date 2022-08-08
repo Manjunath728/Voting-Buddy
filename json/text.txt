@@ -40,3 +40,11 @@
     ],
     payment:"type1"
   }
+
+  {
+  "email":"manju1@gmail.com",
+  "eleId":"62edfcd5a8986e592b44bc61",
+  "forVoted": [
+    "Nagi"
+  ]
+}

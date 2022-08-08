@@ -16,7 +16,9 @@ const app = express();
 app.use(express.json());
 app.use(cors())
 app.use("/api/auth/", require("./routes/auth"));
+app.use("/api/userauth/", require("./routes/UserAuth"));
 app.use("/api/administrator", require("./routes/AdministratorUser"));
+app.use("/api/user", require("./routes/UserVote"));
 
 
 // error handler should be last middleware

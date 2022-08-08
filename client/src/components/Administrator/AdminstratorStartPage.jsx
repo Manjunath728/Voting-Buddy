@@ -26,7 +26,7 @@ useEffect(()=>{
   }else{
     navigate("/login")
   } 
-})
+},[])
 
   
 

@@ -1,48 +1,48 @@
 const { findOne } = require("../models/Administrator");
-const Administrator = require("../models/Administrator");
+const User = require("../models/User");
 const ErrorResponce = require("../utils/errorResponce");
 
-exports.register = async (req, res, next) => {
-  const { name, email, password, organizationName,phoneNumber } = req.body;
+exports.Userregister = async (req, res, next) => {
+  const { name, email, password ,phoneNumber,adharNumber} = req.body;
   try {
-    const administrator = await Administrator.create({
+    const user = await User.create({
       name,
       email,
       password,
-      organizationName,
-      phoneNumber
+      phoneNumber,
+      adharNumber
     });
-
-    sendToken(administrator,201,res)
+    
+    sendToken(user,201,res)
   } catch (error) {
     next(error)
   }
 };
-exports.login = async (req, res, next) => {
+exports.Userlogin = async (req, res, next) => {
   const { email, password } = req.body;
   if (!email || !password) {
    return next(new ErrorResponce("please provide both email and password",400))
   }
 
   try {
-    const administrator = await Administrator.findOne({ email }).select("+password");
+    const user = await User.findOne({ email }).select("+password");
 
-    if (!administrator) {
+    if (!user) {
       return next(new ErrorResponce("Invalid email and password",401))
     }
 
-    const isMatch = await administrator.matchPasswords(password);
+    const isMatch = await user.matchPasswords(password);
     if (!isMatch) {
       return next(new ErrorResponce("Invalid email and password",401))
     }
-    sendToken(administrator,200,res)
+    sendToken(user,200,res)
   } catch (error) { res
     .status(500)
     .json({ sucess: false, error:error.message });}
 };
 
 
-const sendToken=(administrator,statusCode,res)=>{
-  const token=administrator.getSignedToken()
+const sendToken=(user,statusCode,res)=>{
+  const token=user.getSignedToken()
   res.status(statusCode).json({sucess:true,token})
 }

@@ -15,13 +15,13 @@ import {
   Typography,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import useFetchAdmin from "../hooks/useFetchAdmin";
+import useFetchVoter from "../hooks/useFetchVoter";
 import { Container } from "@mui/system";
-function AdminstratorDashboard() {
-  const url = "http://localhost:5000/api/administrator";
+function VoterDashboard() {
+  const url = "http://localhost:5000/api/user";
 
-  const { data: user, error } = useFetchAdmin(url);
-
+  const { data: user, error } = useFetchVoter(url);
+  
   if (user === null) {
     return <h1>Loading</h1>;
   }
@@ -41,12 +41,24 @@ function AdminstratorDashboard() {
       if (StartTime > PresentTime) {
         eleStatus = "Not Started";
       } else if (StartTime < PresentTime && EndTime > PresentTime) {
-        for (var i = 0; i < ele.voter.length; i++) {
-          if (ele.voter[i].isVoted === true) {
+        if (ele.details.securityType==="Private") {
+          for (var i = 0; i < ele.voter.length; i++) {
+            if (ele.voter[i].isVoted === true) {
+              voted = true;
+            } else {
+              voted = false;
+              break;
+            }
+          }
+        }else{
+          if( ele.voter.length===ele.payment.maxVoter){
+            console.log("completed");
             voted = true;
-          } else {
+          }else{
+            console.log(ele.voter.length)
+            console.log("not");
+
             voted = false;
-            break;
           }
         }
         if (voted) {
@@ -61,6 +73,7 @@ function AdminstratorDashboard() {
   }
   return (
     <>
+
       {user.election.length === 0 ? (
         <>
           <ThemeProvider
@@ -74,17 +87,9 @@ function AdminstratorDashboard() {
             >
               <Grid textAlign={"center"}>
                 <h2 style={{ fontFamily: "Inter", color: "grey" }}>
-                  No Election found Create New Election{" "}
+                  No public or  Private eligible elections found
                 </h2>
-                <Link to="/electioncreate">
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    sx={{ color: "white" }}
-                  >
-                    Create Election
-                  </Button>
-                </Link>
+                
               </Grid>
             </Box>
           </ThemeProvider>
@@ -101,34 +106,36 @@ function AdminstratorDashboard() {
                         <Typography variant="h6">Id</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h6">Election</Typography>
+                        <Typography variant="h6">Elegible Elections</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h6">Election Type</Typography>
+                        <Typography variant="h6">Type</Typography>
                       </TableCell>
                       <TableCell>
                         <Typography variant="h6">Status</Typography>
                       </TableCell>
-                      <TableCell><Typography variant="h6">Deatils</Typography></TableCell>
+                      <TableCell></TableCell>
+                      
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {user.election.map((ele, index) => {
                       return (
-
-                        <TableRow key={index}>
-                          <TableCell>{index + 1}</TableCell>
-                          <TableCell>
-                            {ele.details.electionTitle}
-                          </TableCell>
-                          <TableCell>{ele.details.securityType}</TableCell>
-                          <TableCell>{Status(ele)}</TableCell>
-                          <TableCell><Link to={`/election/${ele._id}`}><ThemeProvider
+                        
+                          <TableRow key={index}>
+                            <TableCell>{index + 1}</TableCell>
+                            <TableCell>
+                              {ele.details.electionTitle}
+                            </TableCell>
+                            <TableCell>
+                              {ele.details.securityType}
+                            </TableCell>
+                            <TableCell>{Status(ele)}</TableCell>
+                            <TableCell><Link to={`/voter/vote/election/${ele._id}`}><ThemeProvider
                             theme={createTheme({ palette: { primary: { main: "#EC7700" } } })}
-                          ><Button variant="contained" style={{ color: "white" }}>View deatils</Button></ThemeProvider></Link></TableCell>
-
-                        </TableRow>
-
+                          ><Button style={{color:"white"}} variant="contained">{Status(ele)==="Not Started"?<>Details</>:Status(ele)==="Live"?<>Vote Now</>:<>Results</>}</Button></ThemeProvider></Link></TableCell>
+                          </TableRow>
+                        
                       );
                     })}
                   </TableBody>
@@ -142,4 +149,4 @@ function AdminstratorDashboard() {
   );
 }
 
-export default AdminstratorDashboard;
+export default VoterDashboard;

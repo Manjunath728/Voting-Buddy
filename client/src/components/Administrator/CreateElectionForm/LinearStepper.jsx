@@ -36,7 +36,10 @@ function LinearStepper() {
     electionInstruction:"",
     nota:false,
     candidates:[{candidateName:"",candidateManifesto:""},{candidateName:"",candidateManifesto:""}],
-    voter:[{voterName:"",acessKey:"",passKey:"",email:""}]
+    voter:[{uniqueKey:"",email:""}],
+    maxVoter:null,
+    price:null
+    
 
   })  
   
@@ -68,31 +71,77 @@ function LinearStepper() {
 
   const handleNext=()=>{
     setActiveStep(activeStep+1)
+    if(activeStep===2&&FormData.securityType==="Private"){
+    let data = [...FormData.voter]
+    setFormData((prevValue) => ({
+      ...prevValue,
+      maxVoter:data.length,
+      price:data.length*10
+    }))
+    }
+    
   }
   const handleBack=()=>{
     setActiveStep(activeStep-1)
   }
   const handleSubmit=async()=>{
-    var FinalData={
-      details: {
-        electionTitle: FormData.electionTitle,
-        electionStartAt:FormData.electionStartAt,
-        electionEndAt:FormData.electionEndAt,
-        securityType: FormData.securityType,
-        adminAcessType: FormData.adminAcessType,
-        voterAcessType: FormData.voterAcessType,
-      },
-      ballots: {
-        ballotInstruction:FormData.ballotInstruction,
-        postionName: "class leader",
-        votePerVoter: 1,
-        electionInstruction: "world",
-        nota: true
-      },
-      candidates: FormData.candidates,
-      voter:FormData.voter,
-      payment:"type1"
+    if(FormData.nota){
+      setFormData((prevValue)=>({
+        ...prevValue,
+        candidates:[...prevValue.candidates,{candidateName:"Nota",candidateManifesto:"None of the Above"}]
+
+      }))
+      console.log(FormData.candidates);
     }
+    if(FormData.securityType==="Private"){
+      var FinalData={
+        details: {
+          electionTitle: FormData.electionTitle,
+          electionStartAt:FormData.electionStartAt,
+          electionEndAt:FormData.electionEndAt,
+          securityType: FormData.securityType,
+          adminAcessType: FormData.adminAcessType,
+          voterAcessType: FormData.voterAcessType,
+        },
+        ballots: {
+          ballotInstruction:FormData.ballotInstruction,
+          postionName:FormData.postionName,
+          votePerVoter: FormData.votePerVoter,
+          electionInstruction:FormData.electionInstruction ,
+          nota: true
+        },
+        candidates: FormData.candidates,
+        voter:FormData.voter,
+        payment:{
+          maxVoter: FormData.maxVoter,
+          price:FormData.price
+        }
+      }
+    }else{
+      var FinalData={
+        details: {
+          electionTitle: FormData.electionTitle,
+          electionStartAt:FormData.electionStartAt,
+          electionEndAt:FormData.electionEndAt,
+          securityType: FormData.securityType,
+          adminAcessType: FormData.adminAcessType,
+          voterAcessType: FormData.voterAcessType,
+        },
+        ballots: {
+          ballotInstruction:FormData.ballotInstruction,
+          postionName:FormData.postionName,
+          votePerVoter: FormData.votePerVoter,
+          electionInstruction:FormData.electionInstruction ,
+          nota: true
+        },
+        candidates: FormData.candidates,
+        payment:{
+          maxVoter: FormData.maxVoter,
+          price:FormData.price
+        }
+      }
+    }
+    
     const config = {
       headers: {
         "content-Type": "application/json",
@@ -151,7 +200,7 @@ function LinearStepper() {
         }
         <Button variant='contained' onClick={handleBack} disabled={activeStep===0}>Back</Button>
         {
-          activeStep===steps.length-1?<Button onClick={handleSubmit}>Submit</Button>:<Button onClick={handleNext} variant='contained' >Next</Button>
+          activeStep===steps.length-1?<Button onClick={handleSubmit}> Pay And Submit </Button>:<Button onClick={handleNext} variant='contained' >Next</Button>
         }
       
       
