@@ -333,8 +333,8 @@ function VoteElectionPage() {
                       variant="h2"
                       className="winnerText"
                       style={{
-                        fontFamily: "'Pacifico', cursive",
-                        letterSpacing: ".8rem",
+                        fontFamily: "Carter One",
+                          letterSpacing: ".2rem",
                       }}
                       textAlign={"center"}
                     >

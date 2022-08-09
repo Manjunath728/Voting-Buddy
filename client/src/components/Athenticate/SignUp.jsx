@@ -164,10 +164,10 @@ function SignUp({ history }) {
     >
       <Grid >
         <Paper elevation={20} style={PaperStyle}>
-          <Grid align="center" margin={3}>
+          <Grid align="center" >
             <Avatar style={avatarStyle}>
               <AddCircleOutlineIcon />
-            </Avatar><h2 style={headerStyle}>Sign Up</h2>
+            </Avatar><h2 style={headerStyle}>Elector Sign Up</h2>
             <Typography variant='caption'>
               Please fill this form to Create account
             </Typography>
@@ -184,12 +184,11 @@ function SignUp({ history }) {
 
                 <Button onClick={() => console.log("amclicked")} variant="contained" color='primary' type="submit" style={{ color: "white", width: "50%" }}  >Create  account</Button>
               </Grid>
-              <Grid align="center" margin={0}>
-                <Typography variant="h6">OR</Typography>
-              </Grid>
+              
               <Grid align="center" margin={2}>
+              Already signed Up  Then ?...
                 <Link to="/login">
-                  <Button variant="outlined" color='primary' style={{ color: "black", width: "50%" }} >Login</Button>
+                  <Button  color='primary'  >Login</Button>
                 </Link></Grid>
 
             </ThemeProvider>

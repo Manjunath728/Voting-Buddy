@@ -159,28 +159,32 @@ exports.postVoteFromUser = async (req, res, next) => {
           if(check){
             res.status(400).json({ sucess: false, message: "alredy voted" });
           }else{
-            console.log("am here");
-            Election.findById(election._id ,function (err,FoundElection){
-              if(err){
-                console.log(err);
-              }else{
-                FoundElection.voter=[...FoundElection.voter,{email:req.user.email}]
-                FoundElection.save()
-                console.log(req.user.email);
-              }
-            })
-            forVoted.forEach((name) => {
-              Election.findOneAndUpdate(
-                { eleId, "candidates.candidateName": name },
-                { $inc: { "candidates.$.votes": 1 } },
-                function (err, result) {
-                  if (err) {
-                    console.log(err);
-                  }
+            var checkMaxVoter
+            if(election.voter.length===election.payment.maxVoter){
+              res.status(400).json({ sucess: false, message: "election completed :maxvoter reached " });
+            }else{
+              Election.findById(election._id ,function (err,FoundElection){
+                if(err){
+                  console.log(err);
+                }else{
+                  FoundElection.voter=[...FoundElection.voter,{email:req.user.email}]
+                  FoundElection.save()
                 }
-              );
-            })
-            res.status(201).json({ sucess: true, message: "Voted Sucesfully" });
+              })
+              forVoted.forEach((name) => {
+                Election.findOneAndUpdate(
+                  { eleId, "candidates.candidateName": name },
+                  { $inc: { "candidates.$.votes": 1 } },
+                  function (err, result) {
+                    if (err) {
+                      console.log(err);
+                    }
+                  }
+                );
+              })
+              res.status(201).json({ sucess: true, message: "Voted Sucesfully" });
+            }
+            
 
           }
           

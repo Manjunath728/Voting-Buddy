@@ -155,11 +155,11 @@ function Login() {
                 <Button  variant="contained" color='primary' type="submit" style={{color:"white" ,width:"50%"}} >Log In</Button>
                 </Grid>
                 
-                <Grid align="center" margin={0}>
-                <Typography variant="h6">OR</Typography>
-                </Grid>
-                <Grid  align="center"  margin={2}>
-                <Link to="/signup"><Button  variant="outlined" color='primary' style={{color:"black" ,width:"50%"}} >Create  account</Button>
+                
+                <Grid align="center" margin={2}>
+              Not signed Up  Then ?...
+                <Link to="/signup">
+                  <Button  color='primary'  >Create  account</Button>
                 </Link></Grid>
 
                 </ThemeProvider>

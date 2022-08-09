@@ -144,7 +144,7 @@ function VoterSignUp({history}) {
     }
     
     if (!values.adharNumber) {
-      errors.organizationName = "adharNumber is required....!"
+      errors.adharNumber = "adharNumber is required....!"
     }else if(!/^\d{12}$/.test(values.adharNumber)){
       errors.adharNumber = "please enter 12 digit valid Adhar number....!"
     }
@@ -174,7 +174,7 @@ function VoterSignUp({history}) {
             <form onSubmit={handleSubmit}>
                 <ThemeProvider theme={createTheme({palette: { primary: {main:"#EC7700"}}})}>
                 <TextField helperText={<Typography style={{color:"#EC7700"}}>{formErrors.name}</Typography>}  name="name"onChange={handleChange} onInput={filterDigits} color='primary' style={textfieldStyle} fullWidth label="Name" variant="standard" className="required"placeholder='Enter your Name' value={user.name} />
-                <TextField helperText={<Typography style={{color:"#EC7700"}}>{formErrors.email}</Typography>} name="email"onChange={handleChange} color='primary' style={textfieldStyle} fullWidth label="Email" variant="standard" placeholder='Enter your Email'type="email"value={user.email}  />
+                <TextField helperText={<Typography style={{color:"#EC7700"}}>{formErrors.email}</Typography>} name="email"onChange={handleChange} color='primary' style={textfieldStyle} fullWidth label="Email" variant="standard" placeholder='Enter your Email'value={user.email}  />
                 <TextField helperText={<Typography style={{color:"#EC7700"}}>{formErrors.phoneNumber}</Typography>} name="phoneNumber"onChange={handleChange} color='primary' style={textfieldStyle} fullWidth label="Phone Number" variant="standard" placeholder='Enter your phone Number' onWheel={e => e.target.blur()}type="number"value={user.phoneNumber}  />
                 <TextField helperText={<Typography style={{color:"#EC7700"}}>{formErrors.adharNumber}</Typography>} name="adharNumber"onChange={handleChange} color='primary' style={textfieldStyle} fullWidth label="adhar Number" variant="standard" placeholder='Enter your adhar Number' onWheel={e => e.target.blur()}type="number"value={user.adharNumber}  />
                 <TextField helperText={<Typography style={{color:"#EC7700"}}>{formErrors.password}</Typography>} name="password"onChange={handleChange} color='primary' style={textfieldStyle} fullWidth label="Password" variant="standard" placeholder='Enter password' type="password"value={user.password} />

@@ -86,10 +86,10 @@
   }
 
   .winnerText{
-    font-size:3rem;
+    font-size:3.5rem;
     margin-top:45vh;
     color:white;
-    font-family: 'Pacifico', cursive;
+    font-family: 'Carter One';
     animation-name:glow;
     animation-duration:1s;
     animation-iteration-count:infinite;

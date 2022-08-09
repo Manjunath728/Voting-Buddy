@@ -32,15 +32,15 @@ function Cards() {
         <Grid item align="center" xs={12} md={4}>
         <Link to="/signup"><Paper style={PaperStyle}elevation={20}>
           <img style={{width:"100px"}} src={Admin} />
-            <h1 style={headerStyle}>New Adminstrator</h1>
+            <h1 style={headerStyle}>I'm a Elector/Administrator</h1>
             <Typography >Start a new election</Typography>
         </Paper></Link>
         </Grid>
         <Grid item align="center" xs={12} md={4}>
         <Link to="/login"><Paper style={PaperStyle} elevation={20}>
           <img style={{width:"100px"}} src={ReturnAdmin} />
-            <h1 style={headerStyle}>Returning Adminstrator</h1>
-            <Typography >Log in to your Account</Typography>
+            <h1 style={headerStyle}>I'm a Admin</h1>
+            <Typography >Manage VotingBuddy</Typography>
             
         </Paper></Link>
         </Grid>
