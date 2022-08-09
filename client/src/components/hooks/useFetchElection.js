@@ -27,7 +27,6 @@ function useFetchElection(electionid, from) {
         .then((response) => {
           setData(response.data.election);
           setElectionStatus(response.data.eletionStatus)
-          console.log(response.data.eletionStatus);
         })
         .catch((err) => {
           console.log(err.response.data);

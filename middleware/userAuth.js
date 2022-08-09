@@ -10,7 +10,6 @@ exports.Userprotect=async(req,res ,next)=>{
         // bearer 2652hghf26247652gjhg2hghg2
         token=req.headers.authorization.split(" ")[1]
     }
-    console.log(token)
     if(!token){
         return next(new ErrorResponce("not authorized to acess this route",401))
     }
@@ -25,18 +24,16 @@ exports.Userprotect=async(req,res ,next)=>{
             admin.election.forEach(ele=>{
                 
                 if(ele.details.securityType==="Public"){
-                    console.log("hi");
                     User.findByIdAndUpdate(user._id,
                         {
                   
                         $addToSet:{
                           election:ele._id
                         }
-                      }).then(()=>{console.log("hi manju");})
+                      }).then(()=>{})
                 }else{
                     ele.voter.forEach(async voterList=>{
                         if(voterList.email===user.email){
-                            console.log(user.email +" and "+voterList.email);
                             User.findByIdAndUpdate(user._id,
                                 {
                           
@@ -55,7 +52,6 @@ exports.Userprotect=async(req,res ,next)=>{
 
         next()
     } catch (error) {
-        console.log(error.message);
         return next(new ErrorResponce("not authorized to hi acess this route",401))
     }
 }

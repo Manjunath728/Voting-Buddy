@@ -37,7 +37,7 @@ function Cards() {
         </Paper></Link>
         </Grid>
         <Grid item align="center" xs={12} md={4}>
-        <Link to="/login"><Paper style={PaperStyle} elevation={20}>
+        <Link to="/admin/login"><Paper style={PaperStyle} elevation={20}>
           <img style={{width:"100px"}} src={ReturnAdmin} />
             <h1 style={headerStyle}>I'm a Admin</h1>
             <Typography >Manage VotingBuddy</Typography>

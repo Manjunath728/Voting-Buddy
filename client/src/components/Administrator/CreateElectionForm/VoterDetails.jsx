@@ -18,7 +18,7 @@ import VoterList from "./voterlistSample.csv";
 
 import { toast } from "react-toastify";
 
-function VoterDetails({ FormData, setFormData, formErrors }) {
+function VoterDetails({ FormData, setFormData, formErrors,price }) {
   const handleFormChange = (event, index) => {
     let data = [...FormData.voter];
     data[index][event.target.name] = event.target.value;
@@ -44,6 +44,8 @@ function VoterDetails({ FormData, setFormData, formErrors }) {
       }));
     }
   };
+  
+ 
   return (
     <>
       {FormData.securityType === "Public" ? (
@@ -65,7 +67,7 @@ function VoterDetails({ FormData, setFormData, formErrors }) {
               setFormData({
                 ...FormData,
                 maxVoter: event.target.value,
-                price: event.target.value * 10,
+                price: event.target.value * price,
               })
             }
             margin="normal"

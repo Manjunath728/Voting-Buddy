@@ -1,3 +1,4 @@
+const Admin = require("../models/Admin");
 const Administrator = require("../models/Administrator");
 const { findById } = require("../models/Administrator");
 const Election = require("../models/Election");
@@ -36,7 +37,7 @@ exports.GetElection = async (req, res, next) => {
   const { id } = req.body;
 
   try {
-    console.log(id);
+    
     const ele = req.administrator.election.filter((x) => x._id == id)[0];
     if (ele) {
       const StartTime = new Date(ele.details.electionStartAt);
@@ -44,7 +45,7 @@ exports.GetElection = async (req, res, next) => {
       const EndTime = new Date(ele.details.electionEndAt);
       var eleStatus;
       var voted;
-      console.log(req.administrator.election.voter);
+      
       if (StartTime > PresentTime) {
         eleStatus = "notStarted";
       } else if (StartTime < PresentTime && EndTime > PresentTime) {
@@ -136,11 +137,10 @@ exports.GetResults = async (req, res, next) => {
         }
       }else{
         if( ele.voter.length===ele.payment.maxVoter){
-          console.log("completed");
+          
           voted = true;
         }else{
-          console.log(ele.voter.length)
-          console.log("not");
+          
 
           voted = false;
         }
@@ -177,3 +177,7 @@ exports.GetResults = async (req, res, next) => {
     res.status(400).json({ sucess: false, message: "no ele found" });
   }
 };
+exports.Getprice = async (req, res, next) => {
+   const price= await Admin.findOne({userName: 'admin'})
+  res.status(200).json({ sucess: true, price })
+}

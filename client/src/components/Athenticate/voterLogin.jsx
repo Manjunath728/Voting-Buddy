@@ -40,7 +40,6 @@ function VoterLogin() {
           ...prevValue,
           [name]: value
         }));
-        console.log(user);
       }
       const handleSubmit= async(e)=>{
         e.preventDefault();
@@ -93,7 +92,6 @@ function VoterLogin() {
       }
       
     useEffect(()=>{
-      console.log(formErrors);
       if(Object.keys(formErrors).length===0&&isSubmit){
         handlePost()
       }

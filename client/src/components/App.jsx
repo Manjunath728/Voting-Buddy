@@ -24,6 +24,11 @@ import VoterDashboard from "./Voters/VoterDashboard";
 import VoterLogin from "./Athenticate/voterLogin";
 import VoteElectionPage from "./Voters/VoteElectionPage";
 import { Button } from "@mui/material";
+import AdminLogin from "./Athenticate/AdminLogin";
+import AdminStartPage from "./Admin/AdminStartPage";
+import AdminDashBoard from "./Admin/AdminDashBoard";
+import AdminLogout from "./Admin/AdminLogout";
+import AdminPricing from "./Admin/AdminPricing";
 function App() {
   return (
    <>
@@ -46,10 +51,19 @@ function App() {
         <Route path="/voter/signup" element={<VoterSignUp/>}/>
         <Route path="/voter/login" element={<VoterLogin/>}/>
       </Route> 
+      <Route path="/" element={<BlankPage/>}>
+        <Route path="/admin/login" element={<AdminLogin/>}/>
+      </Route> 
       <Route path="" element={<VoterStartingPage/>}>
         <Route path="/voter/dashboard" element={<VoterDashboard/>}/>
         <Route path="/voter/vote/election/:electionid" element={<VoteElectionPage/>}/>
-  
+
+      </Route>
+      <Route path="" element={<AdminStartPage/>}>
+        <Route path="/admin/dashboard" element={<AdminDashBoard/>}/>
+        <Route path="/admin/logout" element={<AdminLogout/>}/>
+        <Route path="/admin/pricing" element={<AdminPricing/>}/>
+
       </Route>
 
       <Route path="" element={<AdminstratorStartPage/>}>

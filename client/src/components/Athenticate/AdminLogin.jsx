@@ -24,13 +24,13 @@ fontFamily:"Inter",
 
 }
 
-function Login() {
+function AdminLogin() {
 
     const navigate=useNavigate()
     const [formErrors, setFormErrors] = useState({})
     const [isSubmit,setIsSubmit]=useState(false)
     const [user,setUser]=useState({
-        email:"",
+        userName:"",
         password:"",
         confirmPassword:""
     })
@@ -42,6 +42,7 @@ function Login() {
           ...prevValue,
           [name]: value
         }));
+        
       }
     const handleSubmit= async(e)=>{
         e.preventDefault();
@@ -57,7 +58,7 @@ function Login() {
           
         }
         try {
-          const {data}=await axios.post("http://localhost:5000/api/auth/login",user,config)
+          const {data}=await axios.post("http://localhost:5000/api/admin/login",user,config)
           localStorage.setItem("authToken",data.token)
           if(data.sucess===true){
             toast.success("Sucessfully Logged In", {
@@ -69,7 +70,7 @@ function Login() {
               draggable: true,
               progress: undefined,
               });
-              navigate("/dashboard ")
+              navigate("/admin/dashboard")
           }
           
         } catch (error) {
@@ -88,11 +89,13 @@ function Login() {
               "password": "",
               "confirmPassword":""
             }));
+            
           
         }
       }
     useEffect(()=>{
         if(Object.keys(formErrors).length===0&&isSubmit){
+            
           handlePost()
         }
         if(Object.keys(formErrors).length!==0&&isSubmit){
@@ -110,10 +113,8 @@ function Login() {
     
       const validate = (values) => {
         const errors = {} 
-        if (!values.email) {
-          errors.email = "email is required....!"
-        }else if(!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.email)){
-          errors.email = " valid email is required....!"
+        if (!values.userName) {
+          errors.email = "userName is required....!"
         }
         if (!values.password) {
           errors.password = "password is required....!"
@@ -139,14 +140,14 @@ function Login() {
             <Grid align="center" margin={3}>
                 <Avatar style={avatarStyle}>
                 <LoginIcon />
-                </Avatar><h2 style={headerStyle}>Log In</h2>
+                </Avatar><h2 style={headerStyle}> Admin Log In</h2>
                 <Typography variant='caption'>
-                Enter E-mail and password to Log In
+                Enter User name and password to Log In
                 </Typography>
             </Grid>
             <form   onSubmit={handleSubmit}>
                 <ThemeProvider theme={createTheme({palette: { primary: {main:"#EC7700"}}})}>
-                <TextField helperText={<Typography style={{color:"#EC7700"}}>{formErrors.email}</Typography>} name="email"onChange={handleChange} color='primary' style={textfieldStyle} fullWidth label="Email" variant="standard" placeholder='Enter your Email' value={user.email}  />
+                <TextField helperText={<Typography style={{color:"#EC7700"}}>{formErrors.email}</Typography>} name="userName"onChange={handleChange} color='primary' style={textfieldStyle} fullWidth label="User Name" variant="standard" placeholder='Enter your user Name' value={user.userName}  />
                 <TextField helperText={<Typography style={{color:"#EC7700"}}>{formErrors.password}</Typography>}name="password"onChange={handleChange} color='primary' style={textfieldStyle} fullWidth label="Password" variant="standard" placeholder='Enter password' type="password"value={user.password} />
                 <TextField helperText={<Typography style={{color:"#EC7700"}}>{formErrors.confirmPassword}</Typography>} name="confirmPassword"  onChange={handleChange} color='primary' style={textfieldStyle} fullWidth label="Confirm Password" variant="standard" placeholder='Confirm your Password'type="password" value={user.confirmPassword}/>
                 <Grid  align="center" margin={4}>
@@ -154,11 +155,8 @@ function Login() {
                 </Grid>
                 
                 
-                <Grid align="center" margin={2}>
-              Not signed Up  Then ?...
-                <Link to="/signup">
-                  <Button  color='primary'  >Create  account</Button>
-                </Link></Grid>
+            
+             
 
                 </ThemeProvider>
             </form>
@@ -170,4 +168,4 @@ function Login() {
   )
 }
 
-export default Login
+export default AdminLogin

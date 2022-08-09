@@ -141,7 +141,6 @@ function VoteElectionPage() {
               },
             ],
           });
-          console.log("am Done");
           setIsResults(true);
           setIsResultsLoading(true);
         } else {
@@ -160,11 +159,7 @@ function VoteElectionPage() {
         console.log(err);
       });
   };
-  if (remember.length !== ele.ballots.votePerVoter && pass !== "") {
-    console.log("true");
-  } else {
-    console.log("flase");
-  }
+  
   return (
     <>
       <Grid>

@@ -105,7 +105,6 @@ function SignUp({ history }) {
     }
   }
   useEffect(()=>{
-    console.log(formErrors);
     if(Object.keys(formErrors).length===0&&isSubmit){
       handlePost()
     }if(Object.keys(formErrors).length!==0&&isSubmit){
@@ -182,7 +181,7 @@ function SignUp({ history }) {
               <TextField helperText={<Typography style={{color:"#EC7700"}}>{formErrors.organizationName}</Typography>}name="organizationName" onChange={handleChange} onInput={filterDigits} color='primary' style={textfieldStyle} fullWidth label="Organization Name" variant="standard" placeholder='Enter your Organization Name' value={user.organizationName} />
               <Grid align="center" margin={4}>
 
-                <Button onClick={() => console.log("amclicked")} variant="contained" color='primary' type="submit" style={{ color: "white", width: "50%" }}  >Create  account</Button>
+                <Button  variant="contained" color='primary' type="submit" style={{ color: "white", width: "50%" }}  >Create  account</Button>
               </Grid>
               
               <Grid align="center" margin={2}>

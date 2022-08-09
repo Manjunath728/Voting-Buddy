@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import useFetchPrice from "../../hooks/useFetchPrice";
 import BallotDesign from "./BallotDesign";
 import BasicDetails from "./BasicDetails";
 import Payment from "./Payment";
@@ -23,18 +24,17 @@ function getStep() {
 }
 const getTime = (time) => {
   const date = new Date(time);
-  console.log(date.toISOString().substring(0, 13));
   return date.toISOString().substring(0, 13);
 };
 const getNextTime = (time) => {
   const date = new Date(time);
   date.setHours(date.getHours() + 1);
-  console.log(date.toISOString().substring(0, 13));
   return date.toISOString().substring(0, 13);
 };
 
 function LinearStepper() {
   const navigate = useNavigate();
+  const {price,error}=useFetchPrice()
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
   const [FormData, setFormData] = useState({
@@ -57,7 +57,7 @@ function LinearStepper() {
     maxVoter:"",
     price: "",
   });
-
+  
   function getStepContent(step) {
     switch (step) {
       case 0:
@@ -81,6 +81,7 @@ function LinearStepper() {
           <VoterDetails
             formErrors={formErrors}
             FormData={FormData}
+            price={price}
             setFormData={setFormData}
           />
         );
@@ -102,12 +103,13 @@ function LinearStepper() {
   const steps = getStep();
 
   const handleNext = () => {
+    
     if (activeStep === 2 && FormData.securityType === "Private") {
       let data = [...FormData.voter];
       setFormData((prevValue) => ({
         ...prevValue,
         maxVoter: data.length,
-        price: data.length * 10,
+        price: data.length * price,
       }));
     }
     if (activeStep === 1 && FormData.nota) {
@@ -123,7 +125,6 @@ function LinearStepper() {
     setIsSubmit(true);
   };
   useEffect(() => {
-    console.log(formErrors);
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       setActiveStep(activeStep + 1);
     }
@@ -140,7 +141,6 @@ function LinearStepper() {
     }
   }, [formErrors]);
   const validate = (values) => {
-    console.log("am in validate" + activeStep);
     const errors = {};
     if (activeStep === 0) {
       if (!values.electionTitle) {
@@ -219,8 +219,8 @@ function LinearStepper() {
       const duplicateVoter = values.voter
         .map((e) => e["email"])
         .map((e, i, final) => final.indexOf(e) !== i && i)
-        .filter((obj) => values.candidates[obj])
-        .map((e) => values.candidates[e]["email"]);
+        .filter((obj) => values.voter[obj])
+        .map((e) => values.voter[e]["email"]);
 
       values.voter.forEach((can, index) => {
         if (!can.email) {
@@ -245,7 +245,7 @@ function LinearStepper() {
       });
       if (duplicateVoter.length !== 0) {
         errors.duplicateVoterMessage =
-          "Duplicate Voters names are entered please check....!";
+          "Duplicate Voters emails are entered please check....!";
       }
       if (errors.voter.length === 0) {
         delete errors.voter;
@@ -351,6 +351,11 @@ function LinearStepper() {
       });
     }
   };
+  
+  
+  
+
+  
 
   return (
     <div>

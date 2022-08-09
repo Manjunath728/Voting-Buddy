@@ -73,9 +73,6 @@ AdministratorSchema.pre("save",async function(next){
         next(err)
     }
 })
-AdministratorSchema.methods.checkEmailPresent=async function(email){
-   
- }   
 AdministratorSchema.methods.matchPasswords=async function(password){
     return await bcrypt.compare(password,this.password)
 }

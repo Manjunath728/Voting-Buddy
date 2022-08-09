@@ -52,11 +52,8 @@ function VoterDashboard() {
           }
         }else{
           if( ele.voter.length===ele.payment.maxVoter){
-            console.log("completed");
             voted = true;
           }else{
-            console.log(ele.voter.length)
-            console.log("not");
 
             voted = false;
           }
