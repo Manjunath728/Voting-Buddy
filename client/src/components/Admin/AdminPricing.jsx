@@ -148,7 +148,7 @@ function AdminPricing() {
                 </Typography>
             </Grid>
             <form   onSubmit={handleSubmit}>
-              <Typography variant='h5' style={{color:"#EC7700"}}> Present Price is {presentPrice}</Typography>
+              <Typography variant='h5' style={{color:"#EC7700"}}> Present Price is {presentPrice}/- Rs per Voter</Typography>
                 <ThemeProvider theme={createTheme({palette: { primary: {main:"#EC7700"}}})}>
                 <TextField helperText={<Typography style={{color:"#EC7700"}}>{formErrors.price}</Typography>} name="pricePerVoter"onChange={handleChange}onWheel={(e) => e.target.blur()} color='primary' style={textfieldStyle} fullWidth label="Price per Voter" variant="standard" placeholder='enter price per voter' type={"number"} value={price}  />
                 <Grid  align="center" margin={4}>

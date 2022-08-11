@@ -46,7 +46,7 @@ exports.updatePrice = async (req, res, next) => {
     })
     admin.pricePerVoter=price
     admin.save()
-    res.status(200).json({sucess:true,message:`price per voter updated to ${price}` })
+    res.status(200).json({sucess:true,message:`price per voter updated to ${price}/- Rs` })
   } catch (error) {
     res.status(401).json({sucess:true,message:"price not updated"})
   }
