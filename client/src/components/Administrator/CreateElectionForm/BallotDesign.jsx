@@ -2,6 +2,7 @@ import {
   Button,
   FormControlLabel,
   FormLabel,
+  Stack,
   Grid,
   Paper,
   Radio,
@@ -104,6 +105,12 @@ function BallotDesign({ FormData, setFormData, formErrors }) {
                 key={index}
                 style={{ padding: "20px", margin: "20px auto" }}
               >
+                <Stack
+  direction="column"
+  justifyContent="center"
+  alignItems="center"
+  spacing={2}
+>
                 <TextField
                   label="Candidate name"
                   helperText={
@@ -126,6 +133,9 @@ function BallotDesign({ FormData, setFormData, formErrors }) {
                 <TextField
                   label="Manifesto"
                   variant="outlined"
+                  fullWidth
+                  multiline
+                  minRows={3}
                   helperText={
                     <Typography style={{ color: "#EC7700" }}>
                       {formErrors.candidates &&
@@ -140,16 +150,16 @@ function BallotDesign({ FormData, setFormData, formErrors }) {
                   name="candidateManifesto"
                   value={form.candidateManifesto}
                 />
-                <Button onClick={() => removeFields(index)}>
-                  <DeleteIcon />
-                </Button>
+                <Button  variant={"contained"} onClick={() => removeFields(index)}>
+                  <DeleteIcon sx={{color:"white"}} /> 
+                </Button></Stack>
               </Paper>
             );
           })}
         </Grid>
       </Container>
-      <Button onClick={AddMore}>
-        <AddIcon />
+      <Button variant={"contained"} onClick={AddMore}>
+        <AddIcon  sx={{color:"white"}}/> <Typography sx={{color:"white"}}> Add more candidates</Typography>
       </Button>
       {
         <Typography style={{ color: "#EC7700" }}>

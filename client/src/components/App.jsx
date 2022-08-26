@@ -72,7 +72,7 @@ function App() {
       <Route path="/organization" element={<Organization/>}/>
       <Route path="/billing" element={<Billing/>}/>
       <Route path="/logout" element={<Logout/>} />   
-      <Route path="/electioncreate" element={<ElectionCreate/>} />   
+      <Route path="/electioncreate" element={<ElectionCreate/>} />     
       <Route path="/election/:electionid" element={<Election/>} />   
       </Route>
       <Route path="*" element={<>page not found <Link to=""><Button variant={"contained"}>Click here to goto Home page</Button></Link></>}/>

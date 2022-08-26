@@ -33,7 +33,7 @@ function Cards() {
         <Link to="/signup"><Paper style={PaperStyle}elevation={20}>
           <img style={{width:"100px"}} src={Admin} />
             <h1 style={headerStyle}>I'm a Elector/Administrator</h1>
-            <Typography >Start a new election</Typography>
+            <Typography >Start a new election/Manage created election</Typography>
         </Paper></Link>
         </Grid>
         <Grid item align="center" xs={12} md={4}>

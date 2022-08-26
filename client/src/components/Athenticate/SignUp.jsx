@@ -122,7 +122,7 @@ function SignUp({ history }) {
 
   const validate = (values) => {
     const errors = {}
-    const emailRegularExpression = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+    const emailRegularExpression = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/  
     if (!values.name) {
       errors.name = "name is required....!"
     }
@@ -175,7 +175,7 @@ function SignUp({ history }) {
             <ThemeProvider theme={createTheme({ palette: { primary: { main: "#EC7700" } } })}>
               <TextField helperText={<Typography style={{color:"#EC7700"}}>{formErrors.name}</Typography>} name="name" onChange={handleChange} onInput={filterDigits} color='primary' style={textfieldStyle} fullWidth label="Name" variant="standard" className="required" placeholder='Enter your Name' value={user.name} />
               <TextField helperText={<Typography style={{color:"#EC7700"}}>{formErrors.email}</Typography>}name="email" onChange={handleChange} color='primary' style={textfieldStyle} fullWidth label="Email" variant="standard" placeholder='Enter your Email'  value={user.email} />
-              <TextField helperText={<Typography style={{color:"#EC7700"}}>{formErrors.phoneNumber}</Typography>}name="phoneNumber" onChange={handleChange}  color='primary' style={textfieldStyle} fullWidth label="Phone number" variant="standard" placeholder='Enter your Phone Number'type="number" onWheel={e => e.target.blur()} value={user.phoneNumber} />
+              <TextField helperText={<Typography style={{color:"#EC7700"}}>{formErrors.phoneNumber}</Typography>}name="phoneNumber" onChange={handleChange}  color='primary' style={textfieldStyle} fullWidth label="Phone number" variant="standard" placeholder='Enter your Phone Number'type="number " maxLength="10" onWheel={e => e.target.blur()} value={user.phoneNumber} />
               <TextField helperText={<Typography style={{color:"#EC7700"}}>{formErrors.password}</Typography>}name="password" onChange={handleChange} color='primary' style={textfieldStyle} fullWidth label="Password" variant="standard" placeholder='Enter password' type="password" value={user.password} />
               <TextField helperText={<Typography style={{color:"#EC7700"}}>{formErrors.confirmPassword}</Typography>}name="confirmPassword" onChange={handleChange}  color='primary' style={textfieldStyle} fullWidth label="Confirm Password" variant="standard" placeholder='Confirm your Password' type="password" value={user.confirmPassword} />
               <TextField helperText={<Typography style={{color:"#EC7700"}}>{formErrors.organizationName}</Typography>}name="organizationName" onChange={handleChange} onInput={filterDigits} color='primary' style={textfieldStyle} fullWidth label="Organization Name" variant="standard" placeholder='Enter your Organization Name' value={user.organizationName} />
@@ -185,7 +185,7 @@ function SignUp({ history }) {
               </Grid>
               
               <Grid align="center" margin={2}>
-              Already signed Up  Then ?...
+              Already signed Up ...  ?Then
                 <Link to="/login">
                   <Button  color='primary'  >Login</Button>
                 </Link></Grid>

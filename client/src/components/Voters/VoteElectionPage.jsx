@@ -16,9 +16,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import useFetchElection from "../hooks/useFetchElection";
 import { useState } from "react";
 import { Box } from "@mui/system";
-import { styled } from "@mui/material/styles";
+import { createTheme, styled, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { toast } from "react-toastify";
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -159,7 +159,7 @@ function VoteElectionPage() {
         console.log(err);
       });
   };
-  
+
   return (
     <>
       <Grid>
@@ -258,7 +258,12 @@ function VoteElectionPage() {
                         {ele.candidates.map((can, index) => {
                           return (
                             <Item>
-                              <Avatar variant="square"  sx={{ width: 100, height: 100 }}><AccountCircleIcon/></Avatar>
+                              <Avatar
+                                variant="square"
+                                sx={{ width: 100, height: 100 }}
+                              >
+                                <AccountCircleIcon />
+                              </Avatar>
                               <Typography variant="h3">
                                 {can.candidateName}
                               </Typography>
@@ -308,11 +313,27 @@ function VoteElectionPage() {
               )
             ) : electionStatus === "Completed" && ele.details.voterAcessType ? (
               !isresults ? (
-                <>
-                  Election completed
-                  <Button variant="contained" onClick={handleResult}>
-                    Click Results
-                  </Button>
+                <><Paper elevation={5} sx={{padding:"1rem"}}>
+                  <Stack
+                    direction="column"
+                    justifyContent="center"
+                    alignItems="center"
+                    spacing={2}
+                  >
+                    
+                   <Typography variant="h5"> Election completed</Typography><br></br>
+                    <ThemeProvider
+                      theme={createTheme({
+                        palette: { primary: { main: "#EC7700" } },
+                      })}
+                    >
+                      <Button variant="contained" onClick={handleResult}>
+                        <Typography sx={{ color: "white" }}>
+                          Click Results
+                        </Typography>
+                      </Button>
+                    </ThemeProvider>
+                  </Stack></Paper>
                 </>
               ) : resultsLoading ? (
                 <>
@@ -329,7 +350,7 @@ function VoteElectionPage() {
                       className="winnerText"
                       style={{
                         fontFamily: "Carter One",
-                          letterSpacing: ".2rem",
+                        letterSpacing: ".2rem",
                       }}
                       textAlign={"center"}
                     >

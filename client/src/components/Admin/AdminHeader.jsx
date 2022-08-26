@@ -15,8 +15,9 @@ function AdminHeader() {
     }} />  VotingBuddy</Link></h1>
     <ul className="main-nav">
   
-  
+  <div ><HeaderLinks route="/admin/dashboard" name="Hi Admin" /></div>
   <div ><HeaderLinks route="/admin/pricing" name="Pricing" /></div>
+  
   <div ><HeaderLinks route="/admin/logout" name="Logout" /></div>
   
   

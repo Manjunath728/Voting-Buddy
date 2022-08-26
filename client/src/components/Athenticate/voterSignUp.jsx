@@ -182,14 +182,11 @@ function VoterSignUp({history}) {
                     
                <Button  variant="contained" color='primary' type="submit" style={{color:"white" ,width:"50%"}}>Create  account</Button>
                 </Grid>
-                <Grid align="center" margin={0}>
-                <Typography variant="h6">OR</Typography>
-                </Grid>
-                <Grid  align="center"  margin={2}>
-                    <Link to="/voter/login">
-                <Button  variant="outlined" color='primary'  style={{color:"black" ,width:"50%"}} >Login</Button>
+                <Grid align="center" margin={2}>
+              Already signed Up  Then ?...
+                <Link to="/voter/login">
+                  <Button  color='primary'  >Login</Button>
                 </Link></Grid>
-
                 </ThemeProvider>
             </form>
             <ToastContainer/>

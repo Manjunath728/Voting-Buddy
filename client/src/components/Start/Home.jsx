@@ -91,7 +91,7 @@ function Home() {
                         textAlign:"start",
 
                         
-                    }}>Trusted By 11,984+ Organizations</h2>
+                    }}>Trusted By Big  Organizations like GFGC</h2>
                 <h1 style={
                     {
                         fontSize:"48px",
@@ -116,7 +116,7 @@ function Home() {
                         
                         
                         
-                    }}>ElectionBuddy guarantees election integrity, boosts voter engagement and saves serious hours. It's free to test and free for up to 20 voters.</p>
+                    }}>ElectionBuddy guarantees election integrity, boosts voter engagement and saves serious hours.Highly integerated results</p>
                     <div style={Buttons}>
                     <ThemeProvider theme={theme}>
                     <Stack direction="row" spacing={5}>

@@ -2,6 +2,9 @@ const Admin = require("../models/Admin");
 const Administrator = require("../models/Administrator");
 const { findById } = require("../models/Administrator");
 const Election = require("../models/Election");
+const path =require("path")
+
+
 exports.getAdministrator = (req, res, next) => {
   res.status(200).json({ sucess: true, admin: req.administrator });
 };
@@ -180,4 +183,22 @@ exports.GetResults = async (req, res, next) => {
 exports.Getprice = async (req, res, next) => {
    const price= await Admin.findOne({userName: 'admin'})
   res.status(200).json({ sucess: true, price })
+}
+exports.deleteElection = async (req, res, next) => {
+const {electionId}=req.body
+
+const ele = req.administrator.election.filter((x) => x._id == electionId)[0];
+if(!ele){
+  res.status(400).json({ sucess: false, message: "no ele found" });
+}
+
+try {
+   await Election.findByIdAndDelete(electionId)
+   await Administrator.findByIdAndUpdate(req.administrator._id,{ $pull: { election:electionId } }).then(console.log("sucess delete"))
+} catch (error) {
+  console.log(error)
+  res.status(400).json({ sucess: false ,message:" not Deleted"})
+}
+res.status(200).json({ sucess: true,message:"sucessfully Deleted"})
+
 }

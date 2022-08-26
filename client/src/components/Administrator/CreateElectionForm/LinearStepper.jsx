@@ -384,7 +384,7 @@ function LinearStepper() {
           {activeStep === steps.length - 1 ? (
             <Button onClick={handleSubmit}> Pay And Submit </Button>
           ) : (
-            <Button onClick={handleNext} variant="contained">
+            <Button sx={{color:"white",margin:"1rem",}} onClick={handleNext} variant="contained">
               Next
             </Button>
           )}

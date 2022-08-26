@@ -139,7 +139,7 @@ function Login() {
             <Grid align="center" margin={3}>
                 <Avatar style={avatarStyle}>
                 <LoginIcon />
-                </Avatar><h2 style={headerStyle}>Log In</h2>
+                </Avatar><h2 style={headerStyle}> Elector Log In</h2>
                 <Typography variant='caption'>
                 Enter E-mail and password to Log In
                 </Typography>
@@ -155,7 +155,7 @@ function Login() {
                 
                 
                 <Grid align="center" margin={2}>
-              Not signed Up  Then ?...
+              Not signed Up...? Then 
                 <Link to="/signup">
                   <Button  color='primary'  >Create  account</Button>
                 </Link></Grid>

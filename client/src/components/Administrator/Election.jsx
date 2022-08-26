@@ -1,4 +1,4 @@
-import { Button, Grid, Paper, Typography } from "@mui/material";
+import { Button, createTheme, Grid, Paper, Stack, ThemeProvider, Typography } from "@mui/material";
 import axios from "axios";
 import React, { useEffect } from "react";
 import { useState } from "react";
@@ -183,11 +183,27 @@ function Election() {
                 <> Election is Live but you dont have acess to see Live results</>
               )
             ) : electionStatus === "Completed" && !isresults ? (
-              <>
-                Election completed
-                <Button variant="contained" onClick={handleResult}>
-                  Click Results
-                </Button>
+              <><Paper elevation={5} sx={{padding:"1rem"}}>
+              <Stack
+                direction="column"
+                justifyContent="center"
+                alignItems="center"
+                spacing={2}
+              >
+                
+               <Typography variant="h5"> Election completed</Typography><br></br>
+                <ThemeProvider
+                  theme={createTheme({
+                    palette: { primary: { main: "#EC7700" } },
+                  })}
+                >
+                  <Button variant="contained" onClick={handleResult}>
+                    <Typography sx={{ color: "white" }}>
+                      Click Results
+                    </Typography>
+                  </Button>
+                </ThemeProvider>
+              </Stack></Paper>
               </>
             ) : resultsLoading ? (
               <>
