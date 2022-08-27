@@ -19,12 +19,13 @@ import {
   DialogContentText,
   DialogActions,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useFetchAdmin from "../hooks/useFetchAdmin";
 import { Container } from "@mui/system";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import axios from "axios";
+import { toast } from "react-toastify";
 function AdminstratorDashboard() {
   const url = "http://localhost:5000/api/administrator";
 
@@ -34,6 +35,7 @@ function AdminstratorDashboard() {
       Authorization: "Bearer " + localStorage.authToken,
     },
   };
+  const navigate = useNavigate();
   const [user, setData] = useState(null);
   const [error, setError] = useState(null);
   const [refresh, setRefresh] = useState(true);
@@ -110,12 +112,40 @@ function AdminstratorDashboard() {
       )
       .then((response) => {
         setRefresh(!refresh);
+        toast.success("Sucessfully deleted election", {
+          position: "bottom-left",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        setOpen(false)
       })
+
       .catch((err) => {
         console.log(err);
       });
   };
-  const handleEdit = () => {};
+  
+  const electionUpdate = (id,status) => {
+    if(status==="Not Started"){
+      navigate(`/editelection/${id}`)
+    }else{
+      toast.error(`Cannot edit now because Election is ${status}`, {
+        position: "bottom-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+    
+  };
+
   return (
     <>
       {user.election.length === 0 ? (
@@ -196,10 +226,10 @@ function AdminstratorDashboard() {
                               </Link>
                             </TableCell>
                             <TableCell>
-                            <Link to={`/editelection/${ele._id}`}>
-                              <Button>
+                            
+                              <Button onClick={()=>{electionUpdate(ele._id,Status(ele))}}>
                                 <EditIcon />
-                              </Button></Link>
+                              </Button>
                               <Button
                                 onClick={() => {
                                   setOpen(true);

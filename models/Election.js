@@ -65,8 +65,7 @@ const candiateSchema = new mongoose.Schema({
     required: [true, "enter candidate manifesto"],
   },
   candidateImage: {
-    type: String,
-    required: [true, "enter candidate image"],
+    type: String
   },
   votes:{
     type:Number,

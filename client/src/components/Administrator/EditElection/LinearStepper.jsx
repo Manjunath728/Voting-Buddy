@@ -5,13 +5,14 @@ import {
   StepLabel,
   Stepper,
   ThemeProvider,
+  Typography,
   unstable_composeClasses,
 } from "@mui/material";
 import axios from "axios";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import useFetchPrice from "../../hooks/useFetchPrice";
 import BallotDesign from "./BallotDesign";
@@ -33,6 +34,18 @@ const getNextTime = (time) => {
 };
 
 function LinearStepper() {
+  const { electionid } = useParams();
+  const [prevPaid,setPrevPaid]=useState(null)
+  const [electionStatus,setElectionStatus]=useState(null)
+  const config = {
+    headers: {
+      "content-Type": "application/json",
+      Authorization: "Bearer " + localStorage.authToken,
+    },
+  };
+  
+
+
   const navigate = useNavigate();
   const { price, error } = useFetchPrice();
   const [formErrors, setFormErrors] = useState({});
@@ -57,7 +70,50 @@ function LinearStepper() {
     maxVoter: "",
     price: "",
   });
-
+  useEffect(() => {
+    axios
+      .post(
+        "http://localhost:5000/api/administrator/getelection",
+        {
+          id: electionid,
+        },
+        config
+      )
+      .then((response) => {
+        const ele=response.data.election
+        
+        setFormData({
+          electionTitle: ele.details.electionTitle,
+          electionStartAt: ele.details.electionStartAt,
+          electionEndAt:ele.details.electionEndAt,
+          securityType: ele.details.securityType,
+          adminAcessType: ele.details.adminAcessType,
+          voterAcessType:ele.details.voterAcessType,
+          ballotInstruction: ele.ballots.ballotInstruction,
+          postionName: ele.ballots.postionName,
+          votePerVoter:ele.ballots.votePerVoter,
+          electionInstruction:ele.ballots.electionInstruction,
+          nota: ele.ballots.nota,
+          candidates:ele.candidates,
+          voter: ele.voter,
+          maxVoter: ele.payment.maxVoter,
+          price:ele.payment.price,
+        })
+        if(ele.voter.length===0){
+          setFormData((prevValue) => ({
+            ...prevValue,
+            voter: [
+              { uniqueKey: "", email: "" },
+            ],
+          }));
+        }
+        setPrevPaid(ele.payment.price)
+        setElectionStatus(response.data.eletionStatus)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   function getStepContent(step) {
     switch (step) {
       case 0:
@@ -92,6 +148,7 @@ function LinearStepper() {
             formErrors={formErrors}
             FormData={FormData}
             setFormData={setFormData}
+            prevPaid={prevPaid}
           />
         );
 
@@ -111,7 +168,7 @@ function LinearStepper() {
         price: data.length * price,
       }));
     }
-    if (activeStep === 1 && FormData.nota) {
+    if (activeStep === 3 && FormData.nota) {
       setFormData((prevValue) => ({
         ...prevValue,
         candidates: [
@@ -139,6 +196,7 @@ function LinearStepper() {
       });
     }
   }, [formErrors]);
+
   const validate = (values) => {
     const errors = {};
     if (activeStep === 0) {
@@ -265,6 +323,7 @@ function LinearStepper() {
     setActiveStep(activeStep - 1);
   };
   const handleSubmit = async () => {
+    
     if (FormData.securityType === "Private") {
       var FinalData = {
         details: {
@@ -288,6 +347,7 @@ function LinearStepper() {
           maxVoter: FormData.maxVoter,
           price: FormData.price,
         },
+        id:electionid
       };
     } else {
       FinalData = {
@@ -307,27 +367,23 @@ function LinearStepper() {
           nota: true,
         },
         candidates: FormData.candidates,
+        voter:[],
         payment: {
           maxVoter: FormData.maxVoter,
           price: FormData.price,
         },
+        id:electionid
       };
     }
-
-    const config = {
-      headers: {
-        "content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.authToken,
-      },
-    };
+    console.log(FinalData);
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/api/administrator/electioncreate",
+        "http://localhost:5000/api/administrator/electionupdate",
         FinalData,
         config
       );
       if (data.sucess === true) {
-        toast.success("Sucessfully Created Election", {
+        toast.success("Sucessfully Created updated", {
           position: "bottom-left",
           autoClose: 5000,
           hideProgressBar: false,
@@ -356,6 +412,7 @@ function LinearStepper() {
       <ThemeProvider
         theme={createTheme({ palette: { primary: { main: "#EC7700" } } })}
       >
+        <Typography textAlign={"center"} sx={{margin:"1rem",fontFamily:"carter one"}} variant="h5">Edit Elelction</Typography>
         <Stepper activeStep={activeStep}>
           {steps.map((step, index) => {
             return (
@@ -377,7 +434,7 @@ function LinearStepper() {
             Back
           </Button>
           {activeStep === steps.length - 1 ? (
-            <Button onClick={handleSubmit}> Pay And Submit </Button>
+            <Button onClick={handleSubmit}> update </Button>
           ) : (
             <Button
               sx={{ color: "white", margin: "1rem" }}

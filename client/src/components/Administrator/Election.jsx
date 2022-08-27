@@ -142,12 +142,27 @@ function Election() {
             ) : electionStatus === "Live" ? (
               ele.details.adminAcessType ? (
                 !isresults ? (
-                  <>
-                    {" "}
-                    Election is Live
-                    <Button variant="contained" onClick={handleResult}>
-                      Click Results
-                    </Button>
+                  <><Paper elevation={5} sx={{padding:"1rem"}}>
+                  <Stack
+                    direction="column"
+                    justifyContent="center"
+                    alignItems="center"
+                    spacing={2}
+                  >
+                    
+                   <Typography variant="h5"> Election is Live...</Typography><br></br>
+                    <ThemeProvider
+                      theme={createTheme({
+                        palette: { primary: { main: "#EC7700" } },
+                      })}
+                    >
+                      <Button variant="contained" onClick={handleResult}>
+                        <Typography sx={{ color: "white" }}>
+                          Click Results
+                        </Typography>
+                      </Button>
+                    </ThemeProvider>
+                  </Stack></Paper>
                   </>
                 ) : resultsLoading ? (
                   <>

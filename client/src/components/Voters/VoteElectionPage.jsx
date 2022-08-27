@@ -1,6 +1,9 @@
 import {
   Avatar,
   Button,
+  Card,
+  CardActions,
+  CardContent,
   Checkbox,
   FormControlLabel,
   Grid,
@@ -223,41 +226,53 @@ function VoteElectionPage() {
                   <Typography variant="h4" align="center">
                     Election is Live Please vote....{" "}
                   </Typography>
+                  <br />
                   <Typography variant="h5">
                     <b>Voting Instruction :</b>
 
                     {ele.ballots.electionInstruction}
                   </Typography>
+                  <br />
+                  <Typography variant="h5">
+                    <b>Vote per voter :</b>
 
-                  <Box component="form">
-                    <Paper
-                      component={Box}
-                      width="auto"
-                      p={4}
-                      mx="auto"
-                      elevation={4}
-                    >
-                      <Stack
-                        direction="column"
-                        justifyContent="center"
-                        alignItems="center"
-                        spacing={3}
+                    {ele.ballots.votePerVoter} <br /> {"" + "So select only " + ele.ballots.votePerVoter + " candidate"}
+                  </Typography>
+                  <br />
+                  <ThemeProvider
+                    theme={createTheme({
+                      palette: { primary: { main: "#EC7700" } },
+                    })}
+                  >
+                    <Box component="form">
+                      <Paper
+                        component={Box}
+                        width="auto"
+                        p={4}
+                        mx="auto"
+                        elevation={4}
                       >
-                        {ele.details.securityType === "Private" && (
-                          <TextField
-                            label="Unique Key"
-                            placeholder="Enter unique key "
-                            value={pass}
-                            onChange={(e) => {
-                              setPass(e.target.value);
-                            }}
-                            variant="outlined"
-                          />
-                        )}
+                        <Stack
+                          direction="column"
+                          justifyContent="center"
+                          alignItems="center"
+                          spacing={3}
+                        >
+                          {ele.details.securityType === "Private" && (
+                            <TextField
+                              label="Unique Key"
+                              placeholder="Enter unique key "
+                              value={pass}
+                              onChange={(e) => {
+                                setPass(e.target.value);
+                              }}
+                              variant="outlined"
+                            />
+                          )}
 
-                        {ele.candidates.map((can, index) => {
-                          return (
-                            <Item>
+                          {ele.candidates.map((can, index) => {
+                            return (<>
+                              {/* <Item>
                               <Avatar
                                 variant="square"
                                 sx={{ width: 100, height: 100 }}
@@ -283,22 +298,50 @@ function VoteElectionPage() {
                                   />
                                 }
                               ></FormControlLabel>
-                            </Item>
-                          );
-                        })}
-                        <Button
-                          style={{ margin: "10px" }}
-                          onClick={vote}
-                          variant="contained"
-                          disabled={
-                            remember.length !== ele.ballots.votePerVoter
-                          }
+                            </Item> */}
+                              <Card sx={{ maxWidth: "75%" }}>
+                                <CardContent >
+                                  <Typography sx={{ color: "#00263A", fontFamily: "carter one" }} variant="h5">{can.candidateName}</Typography>
+                                  <Typography variant="body2">{can.candidateManifesto}</Typography>
+                                </CardContent>
+                                <CardActions>
+                                  <FormControlLabel
+                                    key={index}
+                                    label={
+                                      <Typography variant="button">Select as {ele.ballots.postionName}</Typography>
+                                    }
+                                    control={
+                                      <Checkbox
+                                        value={can.candidateName}
+                                        onChange={(e) => handleVote(e, index)}
+                                      />
+                                    }
+                                  ></FormControlLabel>
+                                </CardActions>
+                              </Card>
+
+                            </>);
+                          })}</Stack>
+                        <Stack
+                          justifyContent="center"
+                          alignItems="center"
                         >
-                          Vote Now
-                        </Button>
-                      </Stack>
-                    </Paper>{" "}
-                  </Box>
+                          <Button
+                            sx={{ color: "white" }}
+                            style={{ margin: "10px" }}
+                            onClick={vote}
+                            variant="contained"
+                            disabled={
+                              remember.length !== ele.ballots.votePerVoter
+                            }
+                          >
+                            Vote Now
+                          </Button>
+                        </Stack>
+
+
+                      </Paper>{" "}
+                    </Box></ThemeProvider>
                 </>
               ) : (
                 <>
@@ -313,15 +356,15 @@ function VoteElectionPage() {
               )
             ) : electionStatus === "Completed" && ele.details.voterAcessType ? (
               !isresults ? (
-                <><Paper elevation={5} sx={{padding:"1rem"}}>
+                <><Paper elevation={5} sx={{ padding: "1rem" }}>
                   <Stack
                     direction="column"
                     justifyContent="center"
                     alignItems="center"
                     spacing={2}
                   >
-                    
-                   <Typography variant="h5"> Election completed</Typography><br></br>
+
+                    <Typography variant="h5"> Election completed</Typography><br></br>
                     <ThemeProvider
                       theme={createTheme({
                         palette: { primary: { main: "#EC7700" } },

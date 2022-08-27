@@ -29,6 +29,7 @@ import AdminStartPage from "./Admin/AdminStartPage";
 import AdminDashBoard from "./Admin/AdminDashBoard";
 import AdminLogout from "./Admin/AdminLogout";
 import AdminPricing from "./Admin/AdminPricing";
+import EditElection from "./Administrator/EditElection/EditElection";
 function App() {
   return (
    <>
@@ -74,6 +75,7 @@ function App() {
       <Route path="/logout" element={<Logout/>} />   
       <Route path="/electioncreate" element={<ElectionCreate/>} />     
       <Route path="/election/:electionid" element={<Election/>} />   
+      <Route path="/editelection/:electionid" element={<EditElection/>} />   
       </Route>
       <Route path="*" element={<>page not found <Link to=""><Button variant={"contained"}>Click here to goto Home page</Button></Link></>}/>
       </Routes>

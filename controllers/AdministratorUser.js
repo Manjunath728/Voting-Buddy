@@ -36,6 +36,30 @@ exports.createElection = async (req, res, next) => {
     next(error);
   }
 };
+exports.updateElection = async (req, res, next) => {
+  const { details, ballots, candidates, voter, payment,id } = req.body;
+console.log(id)
+  try {
+    await Election.findByIdAndUpdate(id,{
+      details,
+      ballots,
+      candidates,
+      voter,
+      payment,
+    }).then(()=>{
+      console.log("updated")
+    }).catch((err)=>{
+      console.log(err);
+    })
+
+    res
+      .status(200)
+      .json({ sucess: true, message: "created election sucessfully" });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
 exports.GetElection = async (req, res, next) => {
   const { id } = req.body;
 
@@ -193,7 +217,7 @@ if(!ele){
 }
 
 try {
-   await Election.findByIdAndDelete(electionId)
+  //  await Election.findByIdAndDelete(electionId)
    await Administrator.findByIdAndUpdate(req.administrator._id,{ $pull: { election:electionId } }).then(console.log("sucess delete"))
 } catch (error) {
   console.log(error)
