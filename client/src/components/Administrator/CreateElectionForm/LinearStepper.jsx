@@ -111,15 +111,7 @@ function LinearStepper() {
         price: data.length * price,
       }));
     }
-    if (activeStep === 1 && FormData.nota) {
-      setFormData((prevValue) => ({
-        ...prevValue,
-        candidates: [
-          ...prevValue.candidates,
-          { candidateName: "Nota", candidateManifesto: "None of the Above" },
-        ],
-      }));
-    }
+    
     setFormErrors(validate(FormData));
     setIsSubmit(true);
   };
@@ -265,6 +257,15 @@ function LinearStepper() {
     setActiveStep(activeStep - 1);
   };
   const handleSubmit = async () => {
+    if (FormData.nota) {
+      setFormData((prevValue) => ({
+        ...prevValue,
+        candidates: [
+          ...prevValue.candidates,
+          { candidateName: "Nota", candidateManifesto: "None of the Above" },
+        ],
+      }));
+    }
     if (FormData.securityType === "Private") {
       var FinalData = {
         details: {
